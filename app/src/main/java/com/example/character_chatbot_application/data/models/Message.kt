@@ -5,16 +5,17 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.sql.Timestamp
 
-@Entity(foreignKeys = arrayOf(
-    ForeignKey(entity = character::class,
+@Entity(
+    tableName = "message_table",
+    foreignKeys = arrayOf(
+    ForeignKey(entity = Character::class,
     parentColumns = arrayOf("id"),
     childColumns = arrayOf("characterId"),
     onDelete = ForeignKey.CASCADE)
 ),
     indices = [Index(value = ["characterId"])])
-data class message(
+data class Message(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val characterId: Int,

@@ -6,12 +6,14 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(foreignKeys = arrayOf(ForeignKey(entity = user::class,
+@Entity(
+    tableName = "character_table",
+    foreignKeys = arrayOf(ForeignKey(entity = User::class,
     parentColumns = arrayOf("id"),
     childColumns = arrayOf("userId"),
     onDelete = ForeignKey.CASCADE)),
     indices = [Index(value = ["userId"])])
-data class character(
+data class Character(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val userId: Int,
