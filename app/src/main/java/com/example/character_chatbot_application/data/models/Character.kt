@@ -18,6 +18,9 @@ data class Character(
     val id: Int? = null,
     val userId: Int,
 
+    @ColumnInfo(name = "name")
+    val name: String,
+
     @ColumnInfo(name = "description")
     val description: String,
 

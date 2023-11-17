@@ -19,6 +19,7 @@ class StoryRepository(
 ) {
     fun registerUser(user: User) {
         CoroutineScope(Dispatchers.IO).launch {
+//            Hash passwd here
             userDao.insertUser(user)
         }
     }
