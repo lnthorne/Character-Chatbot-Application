@@ -14,6 +14,6 @@ interface CharacterDao {
     @Query("SELECT * FROM character_table WHERE userId = :userId")
      fun getCharactersByUserId(userId: Int): Flow<List<Character>>
 
-    @Query("DELETE FROM character_table WHERE id = :id")
-    suspend fun deleteCharacterById(id: Int)
+    @Query("DELETE FROM character_table WHERE id = :characterId")
+    suspend fun deleteCharacterById(characterId: Int)
 }
