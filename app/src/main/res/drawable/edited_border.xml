@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/cardview_shadow_end_color" /> <!-- Background color of the EditText -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/black" />
+</shape>
