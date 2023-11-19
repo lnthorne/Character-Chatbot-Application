@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.character_chatbot_application.data.models.User
 import com.example.character_chatbot_application.repositorys.StoryRepository
+import com.example.character_chatbot_application.data.models.Character
 
 class OnboardingViewModel( private val repository : StoryRepository ) : ViewModel() {
     private lateinit var currentUser : LiveData<User>
@@ -18,7 +19,7 @@ class OnboardingViewModel( private val repository : StoryRepository ) : ViewMode
             repository.registerUser(user)
         }
     }
-    fun addCharacter() {
-        repository.insertCharacter()
+    fun addCharacter(character : Character) {
+        repository.insertCharacter(character)
     }
 }
