@@ -16,17 +16,17 @@ import androidx.room.PrimaryKey
 data class Character(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    val userId: Int,
+    val userId: Int = 0,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String = "",
 
     @ColumnInfo(name = "description")
-    val description: String,
+    var description: String = "",
 
     @ColumnInfo(name = "goal")
-    val goal: String,
+    val goal: String = "",
 
     @ColumnInfo(name = "background_context")
-    val backgroundContext: String
+    val backgroundContext: String = ""
 )
