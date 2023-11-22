@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
 
 //        Using this to test the repo
         val gptRepository = GPTRepository(RetrofitClient.gptService)
+
+//        Mock Data
         val char = Character(
             userId = 1,
             name = "Jack Sparrow",
@@ -28,12 +30,26 @@ class MainActivity : AppCompatActivity() {
             backgroundContext = "You are a drunken pirate"
         )
 
+//        Mock Data
         val messages = listOf(Message(
             characterId = 0,
             content = "Hello Jack how are you today",
             timestamp = System.currentTimeMillis(),
             isUser = true
-        ))
+        ),
+            Message(
+                characterId = 0,
+                content = "Arr matey, I be feelin' like a sea turtle on land, wobblin' with the waves. How about ye, matey?",
+                timestamp = System.currentTimeMillis(),
+                isUser = false
+            ),
+            Message(
+                characterId = 0,
+                content = "I am great! Who are you and what do you want?",
+                timestamp = System.currentTimeMillis(),
+                isUser = true
+            )
+        )
 
         Log.i("KEYY", BuildConfig.GPT_KEY)
 
