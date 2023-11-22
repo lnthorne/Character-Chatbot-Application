@@ -13,22 +13,17 @@ class GPTRepository(private val gptService: GPTService) {
 
     suspend fun getCompletion(character: Character?, messageHistory: List<Message>): MessageContent? {
         val prompt = constructPrompt(character, messageHistory)
-        Log.i("prompt", prompt.toString())
-
         try {
             val response = gptService.callGptApi(prompt)
 
             if (response.isSuccessful) {
-                Log.i("GPT_Repository_getCompletion", "Success: ${response.body()}")
                 return response.body()?.choices?.firstOrNull()?.message
             } else {
                 val errorString = response.errorBody()?.string()
-                Log.e("GPT_Repository_getCompletion", "API error: $errorString")
                 throw Exception("API error: $errorString")
             }
         } catch (e: Exception) {
-            Log.e("GPT_Repository_getCompletion", "Exception: ${e.localizedMessage}", e)
-            return null
+            throw Exception("API error: $e")
         }
 
     }

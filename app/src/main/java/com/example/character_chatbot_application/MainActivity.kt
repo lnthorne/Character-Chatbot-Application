@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val char = Character(
             userId = 1,
             name = "Jack Sparrow",
-            description = "You are drunk capatin sparrow from the disney films",
+            description = "You are drunk captain Jack Sparrow from the disney films",
             goal = "Your goal is just create a realist conversation with the user",
             backgroundContext = "You are a drunken pirate"
         )
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 //        Mock Data
         val messages = listOf(Message(
             characterId = 0,
-            content = "Hello Jack how are you today",
+            content = "Hello Jack my name is Foo, how are you today",
             timestamp = System.currentTimeMillis(),
             isUser = true
         ),
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             ),
             Message(
                 characterId = 0,
-                content = "I am great! Who are you and what do you want?",
+                content = "I am great, Who are you? What do you want? What is my name?",
                 timestamp = System.currentTimeMillis(),
                 isUser = true
             )
