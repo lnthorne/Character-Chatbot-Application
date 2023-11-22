@@ -1,3 +1,4 @@
+import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -8,12 +9,27 @@ android {
     namespace = "com.example.character_chatbot_application"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.example.character_chatbot_application"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(localPropertiesFile.inputStream())
+        }
+
+        val gptApiKey = localProperties["GPT_SECRET_KEY"]?.toString() ?: ""
+
+        buildConfigField("String", "GPT_KEY", "\"$gptApiKey\"")
+
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
