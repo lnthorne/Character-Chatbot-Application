@@ -40,4 +40,8 @@ class OnboardingViewModel( private val repository : StoryRepository ) : ViewMode
         // character.userId = currentUser.value?.id
         repository.insertCharacter(character)
     }
+
+    fun swapFragments() {
+
+    }
 }
