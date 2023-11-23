@@ -19,16 +19,24 @@ class MainActivity : AppCompatActivity() {
         // if no character created. -> go into fragment init onboarding,
         // else set fragment to home
 
-        val clickListener = View.OnClickListener {
+        // move the swap into viewmodel. then change the listeners = viewmodel.swap(fragmenttype)
+
+        val initClickListener = View.OnClickListener {
             val swapTransaction = supportFragmentManager.beginTransaction()
             val promptOnboardingFragment = PromptOnboardingFragment()
             swapTransaction.replace(R.id.frame, promptOnboardingFragment)
             swapTransaction.commit()
         }
+        val onboardingClickListener = View.OnClickListener {
+            val swapTransaction = supportFragmentManager.beginTransaction()
+            // CREATE MAIN FRAGMENT
+            // Swap to main fragment
+            swapTransaction.commit()
+        }
+
+        initOnboardingFragment = InitOnboardingFragment(initClickListener)
 
         val transaction = supportFragmentManager.beginTransaction()
-
-        initOnboardingFragment = InitOnboardingFragment(clickListener)
         transaction.replace(R.id.frame, initOnboardingFragment)
         transaction.commit()
     }
