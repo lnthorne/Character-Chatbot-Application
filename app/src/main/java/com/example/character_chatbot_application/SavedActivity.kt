@@ -9,12 +9,12 @@ import com.example.character_chatbot_application.ViewModels.CharacterViewModel
 import com.example.character_chatbot_application.ViewModels.CharacterViewModelFactory
 import com.example.character_chatbot_application.data.daos.CharacterDao
 import com.example.character_chatbot_application.data.database.AppDatabase
-import com.example.character_chatbot_application.data.models.SavedCharacter
+import com.example.character_chatbot_application.data.models.Character
 import com.example.character_chatbot_application.repositorys.StoryRepository
 
 class SavedActivity : AppCompatActivity() {
     private lateinit var myListView: ListView
-    private lateinit var arrayList: ArrayList<SavedCharacter>
+    private lateinit var arrayList: ArrayList<Character>
     private lateinit var arrayAdapter: ListViewAdapter
     private lateinit var database: AppDatabase
     private lateinit var databaseDao: CharacterDao

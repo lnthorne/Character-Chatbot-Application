@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.character_chatbot_application.data.models.SavedCharacter
+import com.example.character_chatbot_application.data.models.Character
 
-class ListViewAdapter(private val context: Context, private var characterList: List<SavedCharacter>) : BaseAdapter(){
+class ListViewAdapter(private val context: Context, private var characterList: List<Character>) : BaseAdapter(){
 
     override fun getItem(position: Int): Any {
         return characterList.get(position)

@@ -6,7 +6,7 @@ import com.example.character_chatbot_application.data.daos.CharacterDao
 import com.example.character_chatbot_application.data.daos.MessageDao
 import com.example.character_chatbot_application.data.daos.UserDao
 import com.example.character_chatbot_application.data.models.Message
-import com.example.character_chatbot_application.data.models.SavedCharacter
+import com.example.character_chatbot_application.data.models.Character
 import com.example.character_chatbot_application.data.models.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ class StoryRepository(
     private val characterDao: CharacterDao,
     private val messageDao: MessageDao,
 ) {
-    val allCharacterEntries: Flow<List<SavedCharacter>> = characterDao.getAllEntries()
+    val allCharacterEntries: Flow<List<Character>> = characterDao.getAllEntries()
     fun registerUser(user: User) {
         CoroutineScope(Dispatchers.IO).launch {
 //            Hash passwd here
