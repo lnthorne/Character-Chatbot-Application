@@ -4,12 +4,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.character_chatbot_application.data.models.Character
+import com.example.character_chatbot_application.data.models.SavedCharacter
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterDao {
     @Insert
     suspend fun insertCharacter(character: Character)
+
+    @Query("SELECT * FROM character_table")
+    fun getAllEntries(): Flow<List<SavedCharacter>>
 
     @Query("SELECT * FROM character_table WHERE userId = :userId")
      fun getCharactersByUserId(userId: Int): Flow<List<Character>>

@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey
     childColumns = arrayOf("userId"),
     onDelete = ForeignKey.CASCADE)),
     indices = [Index(value = ["userId"])])
-data class Character(
+data class SavedCharacter(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val userId: Int,
