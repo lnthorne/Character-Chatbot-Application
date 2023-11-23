@@ -1,5 +1,9 @@
 package com.example.character_chatbot_application
 
+import android.content.Context
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +11,7 @@ import com.example.character_chatbot_application.data.models.User
 import com.example.character_chatbot_application.repositorys.StoryRepository
 import com.example.character_chatbot_application.data.models.Character
 
-class OnboardingViewModel( private val repository : StoryRepository ) : ViewModel() {
+class OnboardingViewModel( private val frameId : Int, private val repository : StoryRepository ) : ViewModel() {
     private lateinit var _currentUser : MutableLiveData<User>
     val currentUser : LiveData<User> get() = _currentUser
     fun getUser(id : Int) {
@@ -33,15 +37,20 @@ class OnboardingViewModel( private val repository : StoryRepository ) : ViewMode
         }
     }
     fun addCharacter(character : Character) {
-        // or change to
-        // (name : String, description : String, goal : String, background : String)
-        // val character = Character()
-        // caracter.name = name
-        // character.userId = currentUser.value?.id
+        repository.insertCharacter(character)
+    }
+    fun addCharacter( name : String, description : String, goal : String, background : String ) {
+        val character = Character()
+        character.name = name
+        character.description = description
+        character.goal = goal
+        character.backgroundContext = background
         repository.insertCharacter(character)
     }
 
-    fun swapFragments() {
-
+    fun swapFragments(supportFragmentManager : FragmentManager, fragment : Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(frameId, fragment)
+        transaction.commit()
     }
 }
