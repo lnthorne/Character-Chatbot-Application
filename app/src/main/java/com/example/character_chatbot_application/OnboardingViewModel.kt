@@ -7,18 +7,41 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.example.character_chatbot_application.data.models.User
 import com.example.character_chatbot_application.repositorys.StoryRepository
 import com.example.character_chatbot_application.data.models.Character
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
 
-class OnboardingViewModel( private val frameId : Int, private val repository : StoryRepository ) : ViewModel() {
-    private lateinit var _currentUser : MutableLiveData<User>
+class OnboardingViewModel( private val frameId : Int, private val userId : Int, private val repository : StoryRepository ) : ViewModel() {
+    private val users = repository.allUsers.asLiveData()
+    private val _currentUser = MutableLiveData<User>()
     val currentUser : LiveData<User> get() = _currentUser
-    fun getUser(id : Int) {
-        val user = repository.getUserById(id)
-        if (user != null) {
-            _currentUser.value = user!!
+    init {
+        val m = User()
+        repository.registerUser(m)
+        CoroutineScope(Dispatchers.IO).launch {
+            val user = repository.getUserById(userId)
+            CoroutineScope(Dispatchers.Main).launch {
+                println("Users: ${users.value?.size}")
+                if (user != null) {
+                    _currentUser.value = user!!
+                    println("Old user")
+                }
+                else {
+                    val newUser = User()
+                    _currentUser.value = newUser
+                    repository.registerUser(newUser)
+                    println("New user.")
+                }
+            }
         }
+    }
+    fun getCurrentUser() : User {
+        return currentUser.value!!
     }
     fun registerUser(user : User) {
         // or change the call signature to take inputs instead of a user

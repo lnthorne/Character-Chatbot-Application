@@ -10,6 +10,7 @@ import com.example.character_chatbot_application.data.models.Message
 import com.example.character_chatbot_application.data.models.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class StoryRepository(
@@ -17,9 +18,11 @@ class StoryRepository(
     private val characterDao: CharacterDao,
     private val messageDao: MessageDao
 ) {
+    val allUsers : Flow<List<User>> = userDao.getUsers()
     fun registerUser(user: User) {
         CoroutineScope(Dispatchers.IO).launch {
 //            Hash passwd here
+            println("Inserting $user")
             userDao.insertUser(user)
         }
     }

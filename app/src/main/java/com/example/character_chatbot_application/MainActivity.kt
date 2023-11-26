@@ -39,26 +39,21 @@ class MainActivity : AppCompatActivity() {
         val udao = database.userDao
         repository = StoryRepository(udao, cdao, mdao)
 
-        val viewModelFactory = OnboardingViewModelFactory(R.id.frame, repository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[OnboardingViewModel::class.java]
 
         val sharedPreferences = getSharedPreferences("userinfo", MODE_PRIVATE)
         val userid = sharedPreferences.getInt(USER_ID_KEY, -1)
-        currentUser = User()
-        println(currentUser.id)
-        if (userid < 0) {
-            currentUser = User()
+        println(userid)
+
+        val viewModelFactory = OnboardingViewModelFactory(R.id.frame, userid, repository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[OnboardingViewModel::class.java]
+
+        viewModel.currentUser.observe(this) {
+            currentUser = viewModel.getCurrentUser()
+            println("help me ${currentUser.id}")
             val editor = sharedPreferences.edit()
             editor.putInt(USER_ID_KEY, currentUser.id)
+            println("saving uid")
             editor.apply()
-            repository.registerUser(currentUser)
-        } else {
-//            val user = repository.getUserById(userid)
-//            if (user == null) {
-//                throw Exception("User created but not in database.")
-//            } else {
-//                currentUser = user
-//            }
         }
 
 

@@ -23,4 +23,7 @@ interface UserDao {
 
     @Update
     suspend fun updateUser(user: User)
+
+    @Query("SELECT * FROM user_table")
+    fun getUsers() : Flow<List<User>>
 }
