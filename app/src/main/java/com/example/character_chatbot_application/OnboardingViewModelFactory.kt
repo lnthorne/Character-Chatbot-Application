@@ -2,9 +2,13 @@ package com.example.character_chatbot_application
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.character_chatbot_application.repositorys.StoryRepository
 
-class OnboardingViewModelFactory : ViewModelProvider.Factory {
+class OnboardingViewModelFactory(private val frameId : Int, private val repository : StoryRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return super.create(modelClass)
+        if (modelClass.isAssignableFrom(OnboardingViewModel::class.java)) {
+            return OnboardingViewModel(frameId, repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
