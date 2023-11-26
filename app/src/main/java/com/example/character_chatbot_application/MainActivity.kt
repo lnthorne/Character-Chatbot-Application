@@ -3,6 +3,7 @@ package com.example.character_chatbot_application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.example.character_chatbot_application.data.database.AppDatabase
 import com.example.character_chatbot_application.data.models.User
 import com.example.character_chatbot_application.repositorys.StoryRepository
 import java.lang.Exception
+import com.example.character_chatbot_application.data.models.Character
 
 class MainActivity : AppCompatActivity() {
     private lateinit var frameLayout : FrameLayout
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var repository: StoryRepository
 
     private lateinit var viewModel: OnboardingViewModel
+    private lateinit var promptOnboardingFragment: PromptOnboardingFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +67,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val initClickListener = View.OnClickListener {
-        val promptOnboardingFragment = PromptOnboardingFragment(currentUser)
+        promptOnboardingFragment = PromptOnboardingFragment(insertPromptClickListener)
         viewModel.swapFragments(supportFragmentManager, promptOnboardingFragment)
     }
 
-    private val onboardingClickListener = View.OnClickListener {
+    private val insertPromptClickListener = View.OnClickListener {
+        val editText : EditText = it as EditText
+        val description = it.text.toString()
+        val character = Character()
+        character.userId = currentUser.id
+        character.description = description
+        println("Inserting character $character")
+        repository.insertCharacter(character)
+        println("Inserted character")
+
+        println("Finished Onboarding")
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.remove(promptOnboardingFragment)
+        transaction.commit()
         // CREATE MAIN FRAGMENT
         // Swap to main fragment
 //        viewModel.swapFragments(supportFragmentManager, mainfragment)
