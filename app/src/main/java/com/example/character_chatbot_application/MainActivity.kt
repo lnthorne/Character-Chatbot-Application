@@ -42,8 +42,6 @@ class MainActivity : AppCompatActivity() {
         val viewModelFactory = OnboardingViewModelFactory(R.id.frame, repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[OnboardingViewModel::class.java]
 
-        // move the swap into viewmodel. then change the listeners = viewmodel.swap(fragmenttype)
-
         val sharedPreferences = getSharedPreferences("userinfo", MODE_PRIVATE)
         val userid = sharedPreferences.getInt(USER_ID_KEY, -1)
         currentUser = User()
@@ -76,10 +74,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val onboardingClickListener = View.OnClickListener {
-        val swapTransaction = supportFragmentManager.beginTransaction()
         // CREATE MAIN FRAGMENT
         // Swap to main fragment
-        swapTransaction.commit()
+//        viewModel.swapFragments(supportFragmentManager, mainfragment)
     }
 
     companion object {
