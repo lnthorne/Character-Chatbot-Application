@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         val description = it.text.toString()
         val character = Character(
             id = 0,
-            userId = userid,
+            userId = currentUser.id,
             name = "",
             description = description,
             goal = "",
