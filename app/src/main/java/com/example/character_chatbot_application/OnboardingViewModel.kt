@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel( private val frameId : Int, private val repository : StoryRepository ) : ViewModel() {
-    val users = repository.allUsers.asLiveData()
+    var users = repository.allUsers.asLiveData()
     val currentUser = MutableLiveData<User>()
 
     val currentUserId = MutableLiveData<Int>()
@@ -30,6 +30,7 @@ class OnboardingViewModel( private val frameId : Int, private val repository : S
     fun registerUser(user : User) {
         repository.registerUser(user) {
             CoroutineScope(Dispatchers.Main).launch {
+                users = repository.allUsers.asLiveData()
                 currentUserId.value = it
                 currentUser.value = user
             }

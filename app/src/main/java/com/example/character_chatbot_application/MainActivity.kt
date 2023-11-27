@@ -55,11 +55,17 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.currentUser.observe(this) {
             println("User is $it")
-            currentUser = it
         }
         viewModel.currentUserId.observe(this) {
             println("Userid is $it")
             saveUserId(it)
+            val duser = viewModel.getUserById(it)
+            println("getting current user")
+            println(duser)
+            if (duser != null) {
+
+                currentUser = duser
+            }
         }
 
         val initOnboardingFragment = InitOnboardingFragment(initClickListener)
@@ -111,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         val description = it.text.toString()
         val character = Character(
             id = 0,
-            userId = currentUser.id,
+            userId = viewModel.currentUserId.value!!,
             name = "",
             description = description,
             goal = "",
