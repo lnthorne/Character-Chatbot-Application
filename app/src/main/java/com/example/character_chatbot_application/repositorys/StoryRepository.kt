@@ -19,11 +19,12 @@ class StoryRepository(
     private val messageDao: MessageDao
 ) {
     val allUsers : Flow<List<User>> = userDao.getUsers()
-    fun registerUser(user: User) {
+    fun registerUser(user: User, callback : (Int) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
 //            Hash passwd here
             println("Inserting $user")
-            userDao.insertUser(user)
+            val id = userDao.insertUser(user).toInt()
+            callback(id)
         }
     }
 

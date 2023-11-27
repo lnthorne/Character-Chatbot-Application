@@ -17,48 +17,37 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel( private val frameId : Int, private val userId : Int, private val repository : StoryRepository ) : ViewModel() {
-    private val users = repository.allUsers.asLiveData()
-    private val _currentUser = MutableLiveData<User>()
-    val currentUser : LiveData<User> get() = _currentUser
+    val users = repository.allUsers.asLiveData()
+    val currentUser = MutableLiveData<User>()
+//    val currentUser : LiveData<User> get() = _currentUser
+    val currentUserId = MutableLiveData<Int>()
     init {
-        val m = User()
-        repository.registerUser(m)
-        CoroutineScope(Dispatchers.IO).launch {
-            val user = repository.getUserById(userId)
+
+    }
+    fun getUserById(userid : Int) : User? {
+        val userList = users.value ?: return null
+        for (user in userList) {
+            if (user.id == userId) {
+                return user
+            }
+        }
+        return null
+    }
+    fun registerUser(user : User) {
+        repository.registerUser(user) {
             CoroutineScope(Dispatchers.Main).launch {
-                println("Users: ${users.value?.size}")
-                if (user != null) {
-                    _currentUser.value = user!!
-                    println("Old user")
-                }
-                else {
-                    val newUser = User()
-                    _currentUser.value = newUser
-                    repository.registerUser(newUser)
-                    println("New user.")
-                }
+                currentUserId.value = it
+                currentUser.value = user
             }
         }
     }
-    fun getCurrentUser() : User {
-        return currentUser.value!!
-    }
-    fun registerUser(user : User) {
-        // or change the call signature to take inputs instead of a user
-        // (firstName:String,lastName:String,password:String,username:String)
-        // val user = User()
-        // user.firstName = firstName
-        // user.lastName = lastName
-        // user.password = password
-        // user.username = userName
-        val existingUser : User? = repository.getUserById(user.id)
-        if (existingUser != null) {
-            // throw some error or something
-        } else {
-            repository.registerUser(user)
-            _currentUser.value = user
-        }
-    }
+    // or change the call signature to take inputs instead of a user
+    // (firstName:String,lastName:String,password:String,username:String)
+    // val user = User()
+    // user.firstName = firstName
+    // user.lastName = lastName
+    // user.password = password
+    // user.username = userName
     fun addCharacter(character : Character) {
         repository.insertCharacter(character)
     }
