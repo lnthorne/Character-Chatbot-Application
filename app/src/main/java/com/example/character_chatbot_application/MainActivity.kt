@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         userid = sharedPreferences.getInt(USER_ID_KEY, -1)
         println(userid)
 
-        val viewModelFactory = OnboardingViewModelFactory(R.id.frame, userid, repository)
+        val viewModelFactory = OnboardingViewModelFactory(R.id.frame, repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[OnboardingViewModel::class.java]
 
         viewModel.users.observe(this, testObserver)
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             backgroundContext = ""
         )
         println("Inserting character $character")
-        repository.insertCharacter(character)
+        viewModel.addCharacter(character)
         println("Inserted character")
         println("Finished Onboarding")
         val transaction = supportFragmentManager.beginTransaction()
