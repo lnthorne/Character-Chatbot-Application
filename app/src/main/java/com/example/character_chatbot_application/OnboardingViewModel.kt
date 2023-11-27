@@ -52,11 +52,14 @@ class OnboardingViewModel( private val frameId : Int, private val userId : Int, 
         repository.insertCharacter(character)
     }
     fun addCharacter( name : String, description : String, goal : String, background : String ) {
-        val character = Character()
-        character.name = name
-        character.description = description
-        character.goal = goal
-        character.backgroundContext = background
+        val character = Character(
+            id = 0,
+            userId=currentUserId.value!!,
+            name=name,
+            description = description,
+            goal = goal,
+            backgroundContext = background
+        )
         repository.insertCharacter(character)
     }
 

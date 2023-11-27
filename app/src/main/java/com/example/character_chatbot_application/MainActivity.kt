@@ -89,9 +89,14 @@ class MainActivity : AppCompatActivity() {
             println("Existing user $userid")
             currentUser = hasUser
         } else {
-            val newUser = User()
+            val newUser = User(
+                id = 0,
+                firstName = "",
+                lastName = "",
+                password = "",
+                username = ""
+            )
             currentUser = newUser
-            currentUser.username = "test"
             viewModel.registerUser(newUser)
         }
     }
@@ -104,9 +109,14 @@ class MainActivity : AppCompatActivity() {
     private val insertPromptClickListener = View.OnClickListener {
         val editText : EditText = it as EditText
         val description = it.text.toString()
-        val character = Character()
-        character.userId = userid
-        character.description = description
+        val character = Character(
+            id = 0,
+            userId = userid,
+            name = "",
+            description = description,
+            goal = "",
+            backgroundContext = ""
+        )
         println("Inserting character $character")
         repository.insertCharacter(character)
         println("Inserted character")
