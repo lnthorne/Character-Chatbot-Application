@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val gptRepository = GPTRepository(RetrofitClient.gptService)
 
 //        Mock Data
+//        This
         val char = Character(
             userId = 1,
             name = "Jack Sparrow",
