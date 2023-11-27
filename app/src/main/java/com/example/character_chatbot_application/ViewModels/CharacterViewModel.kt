@@ -16,6 +16,4 @@ class CharacterViewModel(private val repository: StoryRepository) : ViewModel() 
         repository.deleteCharacterById(id)
     }
 
-
-
 }
