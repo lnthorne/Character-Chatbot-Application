@@ -54,9 +54,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.users.observe(this, testObserver)
 
         viewModel.currentUser.observe(this) {
+            println("User is $it")
             currentUser = it
         }
         viewModel.currentUserId.observe(this) {
+            println("Userid is $it")
             saveUserId(it)
         }
 
@@ -103,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         val editText : EditText = it as EditText
         val description = it.text.toString()
         val character = Character()
-        character.userId = currentUser.id
+        character.userId = userid
         character.description = description
         println("Inserting character $character")
         repository.insertCharacter(character)
