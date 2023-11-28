@@ -15,18 +15,18 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["userId"])])
 data class Character(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
-    var userId: Int,
+    val id: Int,
+    val userId: Int,
 
     @ColumnInfo(name = "name")
-    var name: String,
+    val name: String,
 
     @ColumnInfo(name = "description")
-    var description: String,
+    val description: String,
 
     @ColumnInfo(name = "goal")
-    var goal: String,
+    val goal: String,
 
     @ColumnInfo(name = "background_context")
-    var backgroundContext: String
+    val backgroundContext: String
 )
