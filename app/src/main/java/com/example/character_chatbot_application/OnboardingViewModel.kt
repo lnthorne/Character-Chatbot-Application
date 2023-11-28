@@ -22,6 +22,7 @@ class OnboardingViewModel( private val frameId : Int, private val repository : S
         val userList = users.value ?: return null
         for (user in userList) {
             if (user.id == userId) {
+                currentUser.value = user
                 return user
             }
         }
