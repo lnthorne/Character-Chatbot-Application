@@ -3,7 +3,10 @@ package com.example.character_chatbot_application
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +28,8 @@ class DisplayActivity : AppCompatActivity() {
     private lateinit var repository: StoryRepository
     private lateinit var viewModelFactory: CharacterViewModelFactory
     private lateinit var characterViewModel: CharacterViewModel
+    private lateinit var saveBtn: Button
+    private var isEditMode = false
     var id by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +39,7 @@ class DisplayActivity : AppCompatActivity() {
         name = findViewById(R.id.nameTV)
         description = findViewById(R.id.descriptionTV)
         val deleteBtn = findViewById<Button>(R.id.deleteButton)
-        val backBtn = findViewById<Button>(R.id.backButton)
+        val saveBtn = findViewById<Button>(R.id.saveButton)
         database = AppDatabase.getInstance(this)
         databaseDao = database.characterDao
         repository = StoryRepository(database.userDao, database.characterDao, database.messageDao)
@@ -49,9 +54,10 @@ class DisplayActivity : AppCompatActivity() {
                 description.text = entry.description
             }
         })
-        backBtn.setOnClickListener {
-            finish()
-        }
+
+        name.setOnClickListener { toggleEditMode(name) }
+        description.setOnClickListener { toggleEditMode(description) }
+
         deleteBtn.setOnClickListener {
             if (id != -1) {
                 characterViewModel.deleteEntryById(id)
@@ -60,5 +66,46 @@ class DisplayActivity : AppCompatActivity() {
             }
         }
 
+        saveBtn.setOnClickListener {
+            // save the selected character to database
+        }
+
     }
+    private fun toggleEditMode(viewToEdit: TextView?) {
+        isEditMode = !isEditMode
+        if (isEditMode) {
+            viewToEdit?.let {
+                val text = it.text.toString()
+                it.text = null
+                val editText = EditText(this)
+                editText.setText(text)
+                editText.requestFocus()
+                editText.setSelection(editText.length())
+                editText.setOnEditorActionListener { _, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        viewToEdit.text = editText.text // Update the TextView with edited text
+                        toggleEditMode(null)
+                    }
+                    true
+                }
+                val layoutParams = it.layoutParams
+                val parent = it.parent as ViewGroup
+                val index = parent.indexOfChild(it)
+                parent.removeViewAt(index)
+                parent.addView(editText, index, layoutParams)
+            }
+        } else {
+            viewToEdit?.let {
+                val text = (it.parent as ViewGroup).findViewById<EditText>(it.id)?.text.toString()
+                val textView = TextView(this)
+                textView.text = text
+                val layoutParams = it.layoutParams
+                val parent = it.parent as ViewGroup
+                val index = parent.indexOfChild(it)
+                parent.removeViewAt(index)
+                parent.addView(textView, index, layoutParams)
+            }
+        }
+    }
+
 }
