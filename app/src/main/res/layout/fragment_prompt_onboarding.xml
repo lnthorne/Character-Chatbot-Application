@@ -1,25 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PromptOnboardingFragment"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
-
+    android:gravity="center_horizontal"
+    android:paddingVertical="30dp"
+    android:paddingHorizontal="40dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:divider="@drawable/empty_divider"
+        android:showDividers="middle">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_robot"/>
+    <TextView
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create an AI Avatar"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Craft your personalized AI helper, assisting you, directed by you. Dive in and enjoy the experience!"
+        android:gravity="center_horizontal"/>
     <EditText
         android:id="@+id/desctiption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minLines="5"/>
+        android:minLines="5"
+        android:background="@drawable/rounded_edit_text"
+
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey"
+        android:text="eg. Napoleon Bonaparte, emperor of the French"
+        android:gravity="center_horizontal"/>
+    </LinearLayout>
     <Button
+        android:textSize="18sp"
         android:id="@+id/finishButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Finish"/>
+        android:text="Finish"
+        android:background="@drawable/rounded_buttons"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
