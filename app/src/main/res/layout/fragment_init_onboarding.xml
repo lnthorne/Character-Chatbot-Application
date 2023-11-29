@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".InitOnboardingFragment"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:divider="@drawable/empty_divider"
-    android:showDividers="middle"
-    android:padding="30dp"
-    >
 
+
+    android:paddingVertical="30dp"
+    android:paddingHorizontal="40dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:divider="@drawable/empty_divider"
+        android:showDividers="middle">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_robot" />
     <TextView
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sample"/>
+        android:text="Create an AI Avatar"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sample"/>
+        android:text="Craft your personalized AI helper, assisting you, directed by you. Dive in and enjoy the experience!"
+        android:gravity="center_horizontal"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +40,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sample"/>
+        android:text="Everything the avatars say is made up! Don't take them too seriously or what they say as fact."
+        android:gravity="center_horizontal"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +49,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sample"/>
+        android:text="Characters may mistakenly be offensive, we're constantly working on improving their behaviour."
+        android:gravity="center_horizontal"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,11 +58,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sample"/>
-
+        android:text="Backend by OpenAI's ChatGPT."/>
+    </LinearLayout>
     <Button
+        android:textSize="18sp"
         android:id="@+id/createButton"
         android:text="Create"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/rounded_buttons"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,18 +56,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.currentUser.observe(this) {
             println("User is $it")
         }
-        viewModel.currentUserId.observe(this) {
-            println("Userid is $it")
-            saveUserId(it)
-            val duser = viewModel.getUserById(it)
-            println("getting current user")
-            println(duser)
-            if (duser != null) {
+        viewModel.currentUserId.observe(this, idObserver)
 
-                currentUser = duser
-            }
-        }
-
+        // if there is character.
         val initOnboardingFragment = InitOnboardingFragment(initClickListener)
 
         viewModel.swapFragments(supportFragmentManager, initOnboardingFragment)
@@ -85,15 +76,31 @@ class MainActivity : AppCompatActivity() {
         onInitialize(it)
     }
 
+    private val idObserver = Observer<Int> {
+        println("Userid is $it")
+        saveUserId(it)
+        val duser = viewModel.getUserById(it)
+        println("getting current user")
+        println(duser)
+        if (duser != null) {
+            currentUser = duser
+        }
+    }
+
     private fun onInitialize (it : List<User>) {
         println("We have users")
         println(it)
         // wait for initialization
         viewModel.users.removeObserver(testObserver)
+
         val hasUser : User? = viewModel.getUserById(userid)
         if (hasUser != null) {
             println("Existing user $userid")
             currentUser = hasUser
+            viewModel.currentUserId.removeObserver(idObserver)
+            viewModel.currentUserId.value = userid
+            val frag = WelcomeFragment()
+            viewModel.swapFragments(supportFragmentManager, frag)
         } else {
             val newUser = User(
                 id = 0,
@@ -127,9 +134,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.addCharacter(character)
         println("Inserted character")
         println("Finished Onboarding")
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.remove(promptOnboardingFragment)
-        transaction.commit()
+        val frag = WelcomeFragment()
+        viewModel.swapFragments(supportFragmentManager, frag)
+
+//        val transaction = supportFragmentManager.beginTransaction()
+//        transaction.remove(promptOnboardingFragment)
+//        transaction.commit()
         // CREATE MAIN FRAGMENT
         // Swap to main fragment
 //        viewModel.swapFragments(supportFragmentManager, mainfragment)
