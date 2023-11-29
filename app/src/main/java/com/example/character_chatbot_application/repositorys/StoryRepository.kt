@@ -52,6 +52,12 @@ class StoryRepository(
         }
     }
 
+    fun updateCharacter(character: Character){
+        CoroutineScope(Dispatchers.IO).launch{
+            characterDao.updateCharacter(character)
+        }
+    }
+
     fun getCharacterByUserId(id: Int): LiveData<List<Character>> {
         return characterDao.getCharactersByUserId(id).asLiveData()
     }

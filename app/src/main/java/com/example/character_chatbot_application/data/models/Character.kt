@@ -19,10 +19,10 @@ data class Character(
     val userId: Int,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    var name: String,
 
     @ColumnInfo(name = "description")
-    val description: String,
+    var description: String,
 
     @ColumnInfo(name = "goal")
     val goal: String,

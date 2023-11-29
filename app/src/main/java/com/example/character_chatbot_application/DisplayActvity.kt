@@ -67,9 +67,18 @@ class DisplayActivity : AppCompatActivity() {
         }
 
         saveBtn.setOnClickListener {
-            // save the selected character to database
-        }
+            val newName = name.text.toString()
+            val newDescription = description.text.toString()
 
+            characterViewModel.allCharacterLiveData.observe(this, Observer { savedCharacter ->
+                val entry = savedCharacter.find { it.id == id }
+                entry?.let {
+                    it.name = newName
+                    it.description = newDescription
+                    characterViewModel.updateCharacter(it)
+                }
+            })
+        }
     }
     private fun toggleEditMode(viewToEdit: TextView?) {
         isEditMode = !isEditMode

@@ -16,4 +16,9 @@ class CharacterViewModel(private val repository: StoryRepository) : ViewModel() 
         repository.deleteCharacterById(id)
     }
 
+    fun updateCharacter(character: Character){
+        repository.updateCharacter(character)
+//        From the updated repository
+    }
+
 }

@@ -14,6 +14,7 @@ interface CharacterDao {
     @Query("SELECT * FROM character_table")
     fun getAllEntries(): Flow<List<Character>>
 
+
     @Query("SELECT * FROM character_table WHERE userId = :userId")
      fun getCharactersByUserId(userId: Int): Flow<List<Character>>
 
