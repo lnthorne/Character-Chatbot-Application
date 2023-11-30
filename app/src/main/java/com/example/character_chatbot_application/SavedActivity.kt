@@ -1,8 +1,12 @@
 package com.example.character_chatbot_application
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.character_chatbot_application.ViewModels.CharacterViewModel
@@ -12,7 +16,7 @@ import com.example.character_chatbot_application.data.database.AppDatabase
 import com.example.character_chatbot_application.data.models.Character
 import com.example.character_chatbot_application.repositorys.StoryRepository
 
-class SavedActivity : AppCompatActivity() {
+class SavedActivity : Fragment() {
     private lateinit var myListView: ListView
     private lateinit var arrayList: ArrayList<Character>
     private lateinit var arrayAdapter: ListViewAdapter
@@ -22,25 +26,35 @@ class SavedActivity : AppCompatActivity() {
     private lateinit var viewModelFactory: CharacterViewModelFactory
     private lateinit var characterViewModel: CharacterViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_saved)
-        myListView = findViewById(R.id.listView)
+        val view = inflater.inflate(R.layout.activity_saved, container, false)
+        myListView = view.findViewById(R.id.listView)
         arrayList = ArrayList()
-        arrayAdapter = ListViewAdapter(this, arrayList)
+        arrayAdapter = ListViewAdapter(requireActivity(), arrayList)
         myListView.adapter = arrayAdapter
-        database = AppDatabase.getInstance(this)
+        database = AppDatabase.getInstance(requireActivity())
         databaseDao = database.characterDao
         repository = StoryRepository(database.userDao, database.characterDao, database.messageDao)
         viewModelFactory = CharacterViewModelFactory(repository)
         characterViewModel =
-            ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
+            ViewModelProvider(
+                requireActivity(),
+                viewModelFactory
+            ).get(CharacterViewModel::class.java)
 
-        characterViewModel.allCharacterLiveData.observe(this, Observer { savedCharacter ->
-            arrayList.clear()
-            arrayList.addAll(savedCharacter)
-            arrayAdapter.notifyDataSetChanged()
-        })
+        characterViewModel.allCharacterLiveData.observe(
+            requireActivity(),
+            Observer { savedCharacter ->
+                arrayList.clear()
+                arrayList.addAll(savedCharacter)
+                arrayAdapter.notifyDataSetChanged()
+            })
+        return view
     }
 }
 
