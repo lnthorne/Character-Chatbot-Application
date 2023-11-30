@@ -10,6 +10,7 @@ import com.example.character_chatbot_application.repositorys.StoryRepository
 import com.example.character_chatbot_application.data.models.Character
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel( private val frameId : Int, private val repository : StoryRepository ) : ViewModel() {
@@ -18,15 +19,15 @@ class OnboardingViewModel( private val frameId : Int, private val repository : S
 
     val currentUserId = MutableLiveData<Int>()
 
-    fun getUserById(userId : Int) : User? {
-        val userList = users.value ?: return null
+
+    fun setUserById(userId : Int) {
+        val userList = users.value ?: return
         for (user in userList) {
             if (user.id == userId) {
                 currentUser.value = user
-                return user
+                currentUserId.value = userId
             }
         }
-        return null
     }
     fun registerUser(user : User) {
         repository.registerUser(user) {
@@ -39,6 +40,24 @@ class OnboardingViewModel( private val frameId : Int, private val repository : S
     }
     fun addCharacter(character : Character) {
         repository.insertCharacter(character)
+    }
+
+    fun getCharacterByCurrentCharacter() : Character? {
+        val curid = currentUserId.value
+        if (curid == null) {
+            println("No id")
+            return null
+        }
+        else {
+            val characters = repository.getCharacterByUserId(curid).value
+
+            if (characters.isNullOrEmpty()) {
+                println("No character")
+                return null
+            } else {
+                return characters[0]
+            }
+        }
     }
 
     fun swapFragments(supportFragmentManager : FragmentManager, fragment : Fragment) {
