@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["userId"])])
 data class Character(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int,
     val userId: Int,
 
     @ColumnInfo(name = "name")
