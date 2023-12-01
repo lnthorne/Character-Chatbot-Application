@@ -3,6 +3,7 @@ package com.example.character_chatbot_application.data.daos
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.character_chatbot_application.data.models.Character
 import kotlinx.coroutines.flow.Flow
 
@@ -13,6 +14,9 @@ interface CharacterDao {
 
     @Query("SELECT * FROM character_table WHERE userId = :userId")
      fun getCharactersByUserId(userId: Int): Flow<List<Character>>
+
+     @Update
+     suspend fun updateCharacter(character: Character)
 
     @Query("DELETE FROM character_table WHERE id = :characterId")
     suspend fun deleteCharacterById(characterId: Int)

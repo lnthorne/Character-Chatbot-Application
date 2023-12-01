@@ -28,12 +28,12 @@ class StoryRepository(
         }
     }
 
-    fun getUserById(id: Int): User? {
-        return userDao.getUserById(id)
+    fun getUserById(id: Int): LiveData<User>? {
+        return userDao.getUserById(id)?.asLiveData()
     }
 
-    fun getUserByLogin(username: String, password: String): User? {
-        return userDao.getUserByLogin(username, password)
+    fun getUserByLogin(username: String, password: String): LiveData<User>? {
+        return userDao.getUserByLogin(username, password)?.asLiveData()
     }
 
     fun deleteUserById(id: Int) {
@@ -51,6 +51,12 @@ class StoryRepository(
     fun insertCharacter(character: Character) {
         CoroutineScope(Dispatchers.IO).launch {
             characterDao.insertCharacter(character)
+        }
+    }
+
+    fun updateCharacter(character: Character) {
+        CoroutineScope(Dispatchers.IO).launch {
+            characterDao.updateCharacter(character)
         }
     }
 

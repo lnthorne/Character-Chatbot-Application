@@ -8,4 +8,5 @@
     <color name="light_blue">#17C3CE</color>
     <color name="light_gray">#9E9E9E</color>
 
+    <color name="light_gray_chat_bubble">#F5F5F5</color>
 </resources>
