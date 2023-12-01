@@ -13,5 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Character-Chatbot-Application"
+rootProject.name = "messaging_ui"
 include(":app")
+ 

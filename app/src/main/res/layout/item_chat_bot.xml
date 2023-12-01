@@ -14,7 +14,7 @@
         app:cardElevation="0dp"
         app:cardCornerRadius="12dp"
         app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="false"
+        app:cardUseCompatPadding="true"
         tools:ignore="MissingConstraints">
         <LinearLayout
             android:id="@+id/layout_gchat_container_other"

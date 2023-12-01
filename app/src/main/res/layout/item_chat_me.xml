@@ -21,6 +21,7 @@
             android:id="@+id/layout_gchat_container_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/light_blue"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/text_gchat_message_me"

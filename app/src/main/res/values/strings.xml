@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Character-Chatbot-Application</string>
+    <string name="app_name">messaging_ui</string>
     <string name="welcome_text">Welcome to&#10;Character Bot</string>
     <string name="start_chat">Start Chat</string>
     <string name="character_bot">Character Bot</string>

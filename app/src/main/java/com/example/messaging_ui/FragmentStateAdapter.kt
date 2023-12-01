@@ -1,4 +1,4 @@
-package com.example.character_chatbot_application
+package com.example.messaging_ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

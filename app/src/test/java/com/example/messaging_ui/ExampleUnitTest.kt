@@ -1,4 +1,4 @@
-package com.example.character_chatbot_application
+package com.example.messaging_ui
 
 import org.junit.Test
 
