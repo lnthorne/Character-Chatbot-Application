@@ -22,7 +22,6 @@ import kotlin.properties.Delegates
 class DisplayActivity : AppCompatActivity() {
     private lateinit var name: TextView
     private lateinit var description: TextView
-
     private lateinit var database: AppDatabase
     private lateinit var databaseDao: CharacterDao
     private lateinit var repository: StoryRepository
