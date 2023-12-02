@@ -84,34 +84,35 @@ class DisplayActivity : AppCompatActivity() {
         if (isEditMode) {
             viewToEdit?.let {
                 val text = it.text.toString()
-                it.text = null
+                val parent = it.parent as ViewGroup
+                val index = parent.indexOfChild(it)
+                parent.removeViewAt(index)
+
                 val editText = EditText(this)
                 editText.setText(text)
                 editText.requestFocus()
                 editText.setSelection(editText.length())
                 editText.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        viewToEdit.text = editText.text // Update the TextView with edited text
+                        it.text = editText.text
+                        parent.addView(it, index)
                         toggleEditMode(null)
                     }
                     true
                 }
-                val layoutParams = it.layoutParams
-                val parent = it.parent as ViewGroup
-                val index = parent.indexOfChild(it)
-                parent.removeViewAt(index)
-                parent.addView(editText, index, layoutParams)
+                parent.addView(editText, index, it.layoutParams)
             }
         } else {
             viewToEdit?.let {
-                val text = (it.parent as ViewGroup).findViewById<EditText>(it.id)?.text.toString()
-                val textView = TextView(this)
-                textView.text = text
-                val layoutParams = it.layoutParams
+                val text = it.text.toString()
                 val parent = it.parent as ViewGroup
                 val index = parent.indexOfChild(it)
                 parent.removeViewAt(index)
-                parent.addView(textView, index, layoutParams)
+
+                val textView = TextView(this)
+                textView.text = text
+                textView.layoutParams = it.layoutParams
+                parent.addView(textView, index)
             }
         }
     }
