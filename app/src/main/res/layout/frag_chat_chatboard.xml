@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header with bot name -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/character_bot"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:layout_marginTop="20dp" />
+
+    <!-- Divider line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        android:layout_marginVertical="10dp"/>
+
+    <!-- Bot icon image -->
+    <ImageView
+        android:layout_width="152dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/bot_icon_description"
+        android:src="@drawable/ic_bot" />
+
+    <!-- Sample chat bubbles -->
+    <!-- A ScrollView can be used to wrap the chat history to make it scrollable -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Sample chat message 1 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sample_chat_1"
+                android:background="@drawable/bubble_chat"
+                android:textColor="@color/black"
+                android:padding="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="30dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sample_chat_2"
+                android:background="@drawable/bubble_chat"
+                android:textColor="@color/black"
+                android:padding="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="30dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sample_chat_3"
+                android:background="@drawable/bubble_chat"
+                android:textColor="@color/black"
+                android:padding="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="30dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="example questions"
+                android:textColor="@color/light_gray"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"/>
+
+            <!-- Repeat for more chat messages -->
+            <!-- ... -->
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Input area with text input and send button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <!-- Text input for chat message -->
+        <EditText
+            android:id="@+id/chat_input"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_2"
+            android:background="@drawable/bubble_chat"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:layout_marginEnd="8dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/upload_img"
+            android:layout_marginTop="25dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/microphone"
+            android:layout_marginTop="25dp"/>
+
+        <!-- Send button -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/send_msg"
+            android:src="@drawable/ic_send"
+            android:contentDescription="@string/bot_icon_send_description"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -18,20 +18,23 @@ class StoryRepository(
     private val characterDao: CharacterDao,
     private val messageDao: MessageDao,
 ) {
-    val allCharacterEntries: Flow<List<Character>> = characterDao.getAllEntries()
-    fun registerUser(user: User) {
+
+    val allUsers : Flow<List<User>> = userDao.getUsers()
+    fun registerUser(user: User, callback : (Int) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
 //            Hash passwd here
-            userDao.insertUser(user)
+            println("Inserting $user")
+            val id = userDao.insertUser(user).toInt()
+            callback(id)
         }
     }
 
-    fun getUserById(id: Int): User? {
-        return userDao.getUserById(id)
+    fun getUserById(id: Int): LiveData<User>? {
+        return userDao.getUserById(id)?.asLiveData()
     }
 
-    fun getUserByLogin(username: String, password: String): User? {
-        return userDao.getUserByLogin(username, password)
+    fun getUserByLogin(username: String, password: String): LiveData<User>? {
+        return userDao.getUserByLogin(username, password)?.asLiveData()
     }
 
     fun deleteUserById(id: Int) {
@@ -51,9 +54,9 @@ class StoryRepository(
             characterDao.insertCharacter(character)
         }
     }
-
-    fun updateCharacter(character: Character){
-        CoroutineScope(Dispatchers.IO).launch{
+    
+    fun updateCharacter(character: Character) {
+        CoroutineScope(Dispatchers.IO).launch {
             characterDao.updateCharacter(character)
         }
     }

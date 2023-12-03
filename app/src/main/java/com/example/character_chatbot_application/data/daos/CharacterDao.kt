@@ -20,6 +20,9 @@ interface CharacterDao {
     @Query("SELECT * FROM character_table WHERE userId = :userId")
      fun getCharactersByUserId(userId: Int): Flow<List<Character>>
 
+     @Update
+     suspend fun updateCharacter(character: Character)
+
     @Query("DELETE FROM character_table WHERE id = :characterId")
     suspend fun deleteCharacterById(characterId: Int)
 }
