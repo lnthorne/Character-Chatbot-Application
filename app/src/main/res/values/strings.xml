@@ -8,8 +8,9 @@
     <string name="sample_chat_1">ChatGPT is an artificial-intelligence chatbot developed by Open AI</string>
     <string name="sample_chat_2">ChatGPT launched in November 2022.</string>
     <string name="sample_chat_3">ChatGPT is an artificial-intelligence chatbot developed by OpenAI</string>
-    <string name="hint_1">This is example that what can i do for you.</string>
+    <string name="hint_1">This is example that what can I do for you.</string>
     <string name="hint_2">Ask me anything... </string>
     <string name="bot_icon_description">This is the icon of chatbot</string>
     <string name="bot_icon_send_description">This is the sending icon</string>
+    <string name="save_page_title">OnSaved Page</string>
 </resources>
