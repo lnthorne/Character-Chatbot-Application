@@ -14,7 +14,8 @@ interface GPTService {
 object RequestConstants{
     const val GPT_MODEL = "gpt-3.5-turbo-1106"
     const val MAX_TOKENS = 150
-    const val RESPONSE_FORMAT = "json_object"
+    //const val RESPONSE_FORMAT = "json_object"
+    const val RESPONSE_FORMAT = "text"
 }
 
 data class CompletionRequest(

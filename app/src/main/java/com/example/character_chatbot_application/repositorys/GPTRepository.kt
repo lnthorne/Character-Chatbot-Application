@@ -1,17 +1,17 @@
 package com.example.character_chatbot_application.repositorys
 
-import android.util.Log
+import com.example.character_chatbot_application.ChatMessage
+import com.example.character_chatbot_application.MessageType
 import com.example.character_chatbot_application.Util.CompletionRequest
 import com.example.character_chatbot_application.Util.GPTService
 import com.example.character_chatbot_application.Util.MessageContent
 import com.example.character_chatbot_application.data.models.Character
-import com.example.character_chatbot_application.data.models.Message
 
 
 
 class GPTRepository(private val gptService: GPTService) {
 
-    suspend fun getCompletion(character: Character?, messageHistory: List<Message>): MessageContent? {
+    suspend fun getCompletion(character: List<Character>?, messageHistory: List<ChatMessage>): MessageContent? {
         val prompt = constructPrompt(character, messageHistory)
         try {
             val response = gptService.callGptApi(prompt)
@@ -27,23 +27,38 @@ class GPTRepository(private val gptService: GPTService) {
         }
 
     }
+
     private fun constructPrompt(
-        character: Character?,
-        messageHistory: List<Message>
+        characterList: List<Character>?,
+        messageHistory: List<ChatMessage>
     ): CompletionRequest {
-         val systemMessage = MessageContent(
-             role = "system",
-             content = "You are ${character?.name}, ${character?.description}" +
-                     "your goal is to ${character?.goal}. ${character?.backgroundContext}." +
-                     "You MUST use JSON for your API response"
-         )
+        val character = characterList?.firstOrNull()
+
+        val systemMessageContent = buildString {
+            append("You are ")
+            append(character?.name ?: "an unnamed character")
+            append(", ")
+            append(character?.description ?: "with no specific description")
+            append(". Your goal is to ")
+            append(character?.goal ?: "unknown")
+            append(". ")
+            append(character?.backgroundContext ?: "No background context provided.")
+            //append("You MUST use JSON for your API response.")
+        }
+
+
+        val systemMessage = MessageContent(
+            role = "system",
+            content = systemMessageContent
+        )
 
         val messageContent = messageHistory.map { message ->
             MessageContent(
-                role = if (message.isUser) "user" else "assistant",
-                content = message.content
+                role = if (message.type == MessageType.USER) "user" else "assistant",
+                content = message.message
             )
         }
+
 
         val combinedMessageData = listOf(systemMessage) + messageContent
         return CompletionRequest(
