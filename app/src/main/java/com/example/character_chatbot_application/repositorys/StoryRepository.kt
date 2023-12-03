@@ -5,8 +5,8 @@ import androidx.lifecycle.asLiveData
 import com.example.character_chatbot_application.data.daos.CharacterDao
 import com.example.character_chatbot_application.data.daos.MessageDao
 import com.example.character_chatbot_application.data.daos.UserDao
-import com.example.character_chatbot_application.data.models.Character
 import com.example.character_chatbot_application.data.models.Message
+import com.example.character_chatbot_application.data.models.Character
 import com.example.character_chatbot_application.data.models.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,9 +16,11 @@ import kotlinx.coroutines.launch
 class StoryRepository(
     private val userDao: UserDao,
     private val characterDao: CharacterDao,
-    private val messageDao: MessageDao
+    private val messageDao: MessageDao,
 ) {
+
     val allUsers : Flow<List<User>> = userDao.getUsers()
+    val allCharacterEntries: Flow<List<Character>> = characterDao.getAllEntries()
     fun registerUser(user: User, callback : (Int) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
 //            Hash passwd here
@@ -53,7 +55,7 @@ class StoryRepository(
             characterDao.insertCharacter(character)
         }
     }
-
+    
     fun updateCharacter(character: Character) {
         CoroutineScope(Dispatchers.IO).launch {
             characterDao.updateCharacter(character)

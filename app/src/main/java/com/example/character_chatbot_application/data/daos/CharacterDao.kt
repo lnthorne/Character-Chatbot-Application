@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 interface CharacterDao {
     @Insert
     suspend fun insertCharacter(character: Character)
+    @Query("SELECT * FROM character_table")
+    fun getAllEntries(): Flow<List<Character>>
 
     @Query("SELECT * FROM character_table WHERE userId = :userId")
      fun getCharactersByUserId(userId: Int): Flow<List<Character>>
