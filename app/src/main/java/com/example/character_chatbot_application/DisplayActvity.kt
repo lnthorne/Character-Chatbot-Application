@@ -28,6 +28,8 @@ class DisplayActivity : AppCompatActivity() {
     private lateinit var viewModelFactory: CharacterViewModelFactory
     private lateinit var characterViewModel: CharacterViewModel
     private lateinit var saveBtn: Button
+    private lateinit var nameEdit: EditText
+    private lateinit var descriptionEdit: EditText
     private var isEditMode = false
     var id by Delegates.notNull<Int>()
 
@@ -54,8 +56,16 @@ class DisplayActivity : AppCompatActivity() {
             }
         })
 
-        name.setOnClickListener { toggleEditMode(name) }
-        description.setOnClickListener { toggleEditMode(description) }
+        nameEdit = EditText(this)
+        descriptionEdit = EditText(this)
+
+        name.setOnClickListener {
+            toggleEditMode(name, nameEdit)
+        }
+
+        description.setOnClickListener {
+            toggleEditMode(description, descriptionEdit)
+        }
 
         deleteBtn.setOnClickListener {
             if (id != -1) {
@@ -79,41 +89,27 @@ class DisplayActivity : AppCompatActivity() {
             })
         }
     }
-    private fun toggleEditMode(viewToEdit: TextView?) {
-        isEditMode = !isEditMode
-        if (isEditMode) {
-            viewToEdit?.let {
-                val text = it.text.toString()
-                val parent = it.parent as ViewGroup
-                val index = parent.indexOfChild(it)
-                parent.removeViewAt(index)
+    private fun toggleEditMode(viewToEdit: TextView?, editTextView: EditText?) {
+        if (!isEditMode) {
+            val text = viewToEdit?.text.toString()
+            val parent = viewToEdit?.parent as ViewGroup?
+            val index = parent?.indexOfChild(viewToEdit)
+            parent?.removeView(viewToEdit)
 
-                val editText = EditText(this)
-                editText.setText(text)
-                editText.requestFocus()
-                editText.setSelection(editText.length())
-                editText.setOnEditorActionListener { _, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        it.text = editText.text
-                        parent.addView(it, index)
-                        toggleEditMode(null)
+            editTextView?.setText(text)
+            editTextView?.requestFocus()
+            editTextView?.setSelection(editTextView.length())
+            editTextView?.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (viewToEdit != null) {
+                        viewToEdit.text = editTextView.text
                     }
-                    true
+                    parent?.addView(viewToEdit, index ?: 0)
+                    isEditMode = false
                 }
-                parent.addView(editText, index, it.layoutParams)
+                true
             }
-        } else {
-            viewToEdit?.let {
-                val text = it.text.toString()
-                val parent = it.parent as ViewGroup
-                val index = parent.indexOfChild(it)
-                parent.removeViewAt(index)
-
-                val textView = TextView(this)
-                textView.text = text
-                textView.layoutParams = it.layoutParams
-                parent.addView(textView, index)
-            }
+            parent?.addView(editTextView, index ?: 0, viewToEdit?.layoutParams)
         }
     }
 
