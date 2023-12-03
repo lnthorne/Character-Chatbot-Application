@@ -20,6 +20,7 @@ class StoryRepository(
 ) {
 
     val allUsers : Flow<List<User>> = userDao.getUsers()
+    val allCharacterEntries: Flow<List<Character>> = characterDao.getAllEntries()
     fun registerUser(user: User, callback : (Int) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
 //            Hash passwd here
