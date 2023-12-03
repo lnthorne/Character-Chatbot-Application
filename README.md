@@ -3,6 +3,9 @@
 ## Introduction
 Welcome to *Chatbot Persona App*, where you can create and interact with your very own AI character. This innovative platform allows users to craft a unique AI persona using descriptive text prompts, bringing a personalized conversational partner to life through the power of GPT, the foundational Large Language Model (LLM).
 
+## Usage
+You need to enter your OpenAI api key in local.properties to run the chatbot
+
 ## Features
 - **Create Your AI**: Users can build their unique AI character by providing brief descriptions (prompts).
 - **Engage in Conversation**: Have meaningful and personalized conversations with your AI character.
