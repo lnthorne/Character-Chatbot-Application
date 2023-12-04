@@ -4,41 +4,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.character_chatbot_application.data.database.AppDatabase
+import com.example.character_chatbot_application.Util.Globals
+import com.example.character_chatbot_application.data.models.Character
 import com.example.character_chatbot_application.repositorys.GPTRepository
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
+import com.example.character_chatbot_application.repositorys.StoryRepository
 import kotlinx.coroutines.launch
 
 class ChatViewModel(
-    private val database: AppDatabase,
+    private val storyRepository: StoryRepository,
     private val gptRepository: GPTRepository
 ): ViewModel() {
     private val _messages = MutableLiveData<MutableList<ChatMessage>>()
     val messages: LiveData<MutableList<ChatMessage>> = _messages
 
-    private var characterDescription: String? = null
-    private var isInitialMessage = true
-    var userId: Int? = 0
+    private val _character: LiveData<Character> = storyRepository.getCharacterByCharacterId(Globals.CHARACTER_ID)
+    val character: LiveData<Character> = _character
 
     init {
         _messages.value = mutableListOf()
     }
 
-    fun loadCharacterData(userId: Int) {
-        viewModelScope.launch {
-            val characters = database.characterDao.getCharactersByUserId(userId).first()
-            characterDescription = characters.firstOrNull()?.description
-        }
-    }
-
-    fun sendMessage(messageText: String) {
+    fun sendMessage(messageText: String, character: Character) {
         viewModelScope.launch {
             // Add user message to LiveData
             addMessageToLiveData(ChatMessage(messageText, MessageType.USER))
 
             val messageHistory = _messages.value.orEmpty()
-            val character = userId?.let { database.characterDao.getCharactersByUserId(it).firstOrNull() }
             try {
                 val response = gptRepository.getCompletion(character, messageHistory)
                 response?.let {

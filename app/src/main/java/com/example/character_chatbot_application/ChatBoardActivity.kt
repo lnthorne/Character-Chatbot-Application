@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.character_chatbot_application.Util.RetrofitClient
 import com.example.character_chatbot_application.data.database.AppDatabase
 import com.example.character_chatbot_application.repositorys.GPTRepository
+import com.example.character_chatbot_application.repositorys.StoryRepository
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.ArrayList
@@ -27,19 +28,6 @@ class ChatBoardActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chatboard)
-
-        // Create an instance of the database
-        val database = AppDatabase.getInstance(this)
-
-        // Create GPTService and GPTRepository instances
-        val gptService = RetrofitClient.gptService
-        val gptRepository = GPTRepository(gptService)
-
-        // Create a ViewModelFactory
-        val viewModelFactory = ChatViewModelFactory(database, gptRepository)
-
-        // Instantiate the ViewModel
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ChatViewModel::class.java)
 
         viewPager2 = findViewById(R.id.viewpager)
         tabLayout = findViewById(R.id.tab)
