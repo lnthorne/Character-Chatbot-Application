@@ -24,9 +24,6 @@ class ChatBoardActivity:AppCompatActivity() {
     private lateinit var tabConfigurationStrategy: TabLayoutMediator.TabConfigurationStrategy
     private lateinit var tabLayoutMediator: TabLayoutMediator
     private lateinit var viewModel: ChatViewModel
-    companion object{
-        var first_time = true
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

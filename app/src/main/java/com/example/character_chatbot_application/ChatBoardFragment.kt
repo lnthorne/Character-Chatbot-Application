@@ -72,8 +72,7 @@ class ChatBoardFragment: Fragment() {
 
         messageInput.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             // If the EditText has focus, hide the LinearLayout
-            if (hasFocus && ChatBoardActivity.first_time) {
-                ChatBoardActivity.first_time = false
+            if (hasFocus ) {
                 linearFeatures.visibility = View.GONE
 
                 messageInput.onFocusChangeListener=null
