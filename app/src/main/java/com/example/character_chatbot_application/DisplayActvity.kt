@@ -20,25 +20,27 @@ import com.example.character_chatbot_application.repositorys.StoryRepository
 import kotlin.properties.Delegates
 
 class DisplayActivity : AppCompatActivity() {
-    private lateinit var name: TextView
+    private lateinit var nameTV: TextView
     private lateinit var description: TextView
+    private lateinit var background: TextView
     private lateinit var database: AppDatabase
     private lateinit var databaseDao: CharacterDao
     private lateinit var repository: StoryRepository
     private lateinit var viewModelFactory: CharacterViewModelFactory
     private lateinit var characterViewModel: CharacterViewModel
-    private lateinit var saveBtn: Button
     private lateinit var nameEdit: EditText
     private lateinit var descriptionEdit: EditText
+    private lateinit var backgroundEdit: EditText
     private var isEditMode = false
     var id by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_history)
-
-        name = findViewById(R.id.nameTV)
+        id = intent.getIntExtra("entryId", -1)
+        nameTV = findViewById(R.id.nameTV)
         description = findViewById(R.id.descriptionTV)
+        background = findViewById(R.id.backgroundTV)
         val deleteBtn = findViewById<Button>(R.id.deleteButton)
         val saveBtn = findViewById<Button>(R.id.saveButton)
         database = AppDatabase.getInstance(this)
@@ -49,44 +51,77 @@ class DisplayActivity : AppCompatActivity() {
             ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
 
         characterViewModel.allCharacterLiveData.observe(this, Observer { savedCharacter ->
-            val entry = savedCharacter.find{it.id == id}
-            if (entry!=null){
-                name.text = entry.name
+            Log.i("Observer", "Observer triggered")
+            val entry = savedCharacter.find { it.id == id }
+            if (entry != null) {
+                nameTV.text = entry.name
                 description.text = entry.description
+                background.text = entry.backgroundContext
             }
         })
 
         nameEdit = EditText(this)
         descriptionEdit = EditText(this)
+        backgroundEdit = EditText(this)
 
-        name.setOnClickListener {
-            toggleEditMode(name, nameEdit)
+        nameTV.setOnClickListener {
+            toggleEditMode(nameTV, nameEdit)
         }
 
         description.setOnClickListener {
             toggleEditMode(description, descriptionEdit)
         }
 
+       background.setOnClickListener {
+            toggleEditMode(background, backgroundEdit)
+        }
+
         deleteBtn.setOnClickListener {
             if (id != -1) {
                 characterViewModel.deleteEntryById(id)
                 Toast.makeText(this, "Entry deleted", Toast.LENGTH_SHORT).show()
+
                 finish()
             }
         }
-
         saveBtn.setOnClickListener {
-            val newName = name.text.toString()
-            val newDescription = description.text.toString()
+            val newName = nameEdit.text.toString()
+            val newDescription = descriptionEdit.text.toString()
+            val newBackground = backgroundEdit.text.toString()
+            Log.d("SaveButton", "New Name: $newName, New Description: $newDescription")
 
-            characterViewModel.allCharacterLiveData.observe(this, Observer { savedCharacter ->
-                val entry = savedCharacter.find { it.id == id }
-                entry?.let {
-                    it.name = newName
-                    it.description = newDescription
-                    characterViewModel.updateCharacter(it)
-                }
-            })
+            // Get the original values from TextViews
+            val originalDescription = description.text.toString()
+            val originalBackground = background.text.toString()
+            val originalName = nameTV.text.toString()
+
+            // Update only if there's a change in the corresponding field
+            if (newDescription.isNotEmpty() && newDescription != originalDescription) {
+                description.text = newDescription
+            }
+            else {
+                // If newBackground is unchanged, retain the original value
+                description.text = originalDescription
+            }
+
+            if (newName.isNotEmpty() && newName != originalName) {
+                nameTV.text = newName
+            }else {
+                // If newBackground is unchanged, retain the original value
+                nameTV.text = originalName
+            }
+
+            // Check if newBackground has changed
+            if (newBackground.isNotEmpty() && newBackground != originalBackground) {
+                background.text = newBackground
+            } else {
+                // If newBackground is unchanged, retain the original value
+                background.text = originalBackground
+            }
+
+            // Update ViewModel only with changed values
+            characterViewModel.updateCharacterNameAndDescription(id, nameTV.text.toString(), description.text.toString(), background.text.toString())
+            finish()
         }
     }
     private fun toggleEditMode(viewToEdit: TextView?, editTextView: EditText?) {

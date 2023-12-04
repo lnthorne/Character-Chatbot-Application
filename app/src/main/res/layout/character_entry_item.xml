@@ -23,4 +23,14 @@
         android:text = "Character details"
         android:layout_below="@+id/title"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:padding="5dp"
+        android:text = "Character background"
+        android:layout_below="@+id/details"
+        android:textSize="18sp" />
 </RelativeLayout>
