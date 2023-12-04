@@ -34,6 +34,7 @@ class ChatBoardActivity:AppCompatActivity() {
 
         chatBoardFrag = ChatBoardFragment()
         saveFrag = SaveFragment()
+        val test = DisplayActivity()
 
         fragments = ArrayList()
         fragments.add(chatBoardFrag)
