@@ -27,9 +27,11 @@ class ListViewAdapter(private val context: Context, private var characterList: L
         val view = View.inflate(context, R.layout.character_entry_item, null)
         val listItemTitle = view.findViewById<TextView>(R.id.title)
         val listItemDetail = view.findViewById<TextView>(R.id.details)
+        val listItemBackground = view.findViewById<TextView>(R.id.background)
         val listItem = characterList[position]
         listItemTitle.text = "${listItem.name}"
         listItemDetail.text = "${listItem.description}"
+        listItemBackground.text = "${listItem.backgroundContext}"
 
         return view
 

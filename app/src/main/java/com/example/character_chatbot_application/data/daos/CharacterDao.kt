@@ -23,8 +23,8 @@ interface CharacterDao {
      @Update
      suspend fun updateCharacter(character: Character)
 
-    @Query("UPDATE character_table SET name = :newName, description = :newDescription WHERE id = :characterId")
-    suspend fun updateCharacterNameAndDescription(characterId: Int, newName: String, newDescription: String)
+    @Query("UPDATE character_table SET name = :newName, description = :newDescription, background_context = :newBackground WHERE id = :characterId")
+    suspend fun updateCharacterNameAndDescription(characterId: Int, newName: String, newDescription: String, newBackground: String)
 
 
     @Query("DELETE FROM character_table WHERE id = :characterId")

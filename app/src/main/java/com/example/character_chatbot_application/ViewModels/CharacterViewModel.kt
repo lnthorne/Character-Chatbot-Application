@@ -29,9 +29,9 @@ class CharacterViewModel(private val repository: StoryRepository) : ViewModel() 
         return repository.getCharacterByCharacterId(characterId)
     }
 
-    fun updateCharacterNameAndDescription(id: Int, newName: String, newDescription: String) {
+    fun updateCharacterNameAndDescription(id: Int, newName: String, newDescription: String, newBackground: String) {
         viewModelScope.launch {
-            repository.updateCharacterNameAndDescription(id, newName, newDescription)
+            repository.updateCharacterNameAndDescription(id, newName, newDescription, newBackground)
         }
     }
 
