@@ -1,5 +1,6 @@
 package com.example.character_chatbot_application
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -55,6 +56,13 @@ class SaveFragment : Fragment() {
                 arrayList.addAll(savedCharacter)
                 arrayAdapter.notifyDataSetChanged()
             })
+
+        myListView.setOnItemClickListener { parent, view, position, id ->
+            val listItem = arrayList[position]
+            val intent = Intent(activity, DisplayActivity::class.java)
+            intent.putExtra("entryId", listItem.id)
+            startActivity(intent)
+        }
         return view
     }
 }
