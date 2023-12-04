@@ -67,10 +67,6 @@ class StoryRepository(
         return characterDao.getCharactersByUserId(id)
     }
 
-    fun getFirstCharacterByUserId(userId: Int): LiveData<Character?> {
-        return characterDao.getFirstCharacterByUserId(userId).map { it.firstOrNull() }.asLiveData()
-    }
-
     fun getCharacterByCharacterId(characterId: Int): LiveData<Character> {
         return characterDao.getCharacterByCharacterId(characterId).asLiveData()
     }

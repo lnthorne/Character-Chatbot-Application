@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -44,10 +45,13 @@ class ChatBoardFragment: Fragment() {
         // Create a ViewModelFactory
         val viewModelFactory = ChatViewModelFactory(storyRepository, gptRepository)
 
+        val toolBarTitle: TextView = view.findViewById(R.id.toolbar_title)
+
         // Instantiate the ViewModel
         viewModel = ViewModelProvider(this, viewModelFactory).get(ChatViewModel::class.java)
         viewModel.character.observe(requireActivity(), Observer {
             character = it
+            toolBarTitle.text = it.name
         })
 
         setupUI(view)

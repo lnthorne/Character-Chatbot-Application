@@ -108,15 +108,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val insertPromptClickListener = View.OnClickListener {
-        val editText : EditText = it as EditText
-        val description = it.text.toString()
+        val (description, name, bgContext) = promptOnboardingFragment.getInputData()
         val character = Character(
             id = Globals.CHARACTER_ID,
             userId = viewModel.currentUserId.value!!,
-            name = "",
+            name = name,
             description = description,
             goal = "",
-            backgroundContext = ""
+            backgroundContext = bgContext
         )
         println("Inserting character $character")
         viewModel.addCharacter(character)

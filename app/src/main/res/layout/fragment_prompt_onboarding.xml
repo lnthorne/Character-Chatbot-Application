@@ -32,14 +32,31 @@
         android:layout_height="wrap_content"
         android:text="Craft your personalized AI helper, assisting you, directed by you. Dive in and enjoy the experience!"
         android:gravity="center_horizontal"/>
-    <EditText
-        android:id="@+id/desctiption"
+
+        <EditText
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minLines="5"
+        android:minLines="1"
         android:background="@drawable/rounded_edit_text"
-
+        android:hint="Name"
         android:gravity="center"/>
+        <EditText
+            android:id="@+id/desctiption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="4"
+            android:background="@drawable/rounded_edit_text"
+            android:hint="Description"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/bgContext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="4"
+            android:background="@drawable/rounded_edit_text"
+            android:hint="Background Information"
+            android:gravity="center"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
