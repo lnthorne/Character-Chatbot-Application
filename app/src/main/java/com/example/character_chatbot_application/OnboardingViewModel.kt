@@ -42,23 +42,6 @@ class OnboardingViewModel( private val frameId : Int, private val repository : S
         repository.insertCharacter(character)
     }
 
-    fun getCharacterByCurrentCharacter() : Character? {
-        val curid = currentUserId.value
-        if (curid == null) {
-            println("No id")
-            return null
-        }
-        else {
-            val characters = repository.getCharacterByUserId(curid).value
-
-            if (characters.isNullOrEmpty()) {
-                println("No character")
-                return null
-            } else {
-                return characters[0]
-            }
-        }
-    }
 
     fun swapFragments(supportFragmentManager : FragmentManager, fragment : Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

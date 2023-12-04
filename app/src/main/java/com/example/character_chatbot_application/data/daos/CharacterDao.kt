@@ -17,6 +17,9 @@ interface CharacterDao {
     @Query("SELECT * FROM character_table WHERE userId = :userId")
      fun getCharactersByUserId(userId: Int): Flow<List<Character>>
 
+    @Query("SELECT * FROM character_table WHERE userId = :characterId")
+    fun getCharacterByCharacterId(characterId: Int): Flow<Character>
+
      @Update
      suspend fun updateCharacter(character: Character)
 

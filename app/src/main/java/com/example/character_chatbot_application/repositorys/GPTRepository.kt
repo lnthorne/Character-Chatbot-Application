@@ -1,5 +1,6 @@
 package com.example.character_chatbot_application.repositorys
 
+import android.util.Log
 import com.example.character_chatbot_application.ChatMessage
 import com.example.character_chatbot_application.MessageType
 import com.example.character_chatbot_application.Util.CompletionRequest
@@ -11,7 +12,7 @@ import com.example.character_chatbot_application.data.models.Character
 
 class GPTRepository(private val gptService: GPTService) {
 
-    suspend fun getCompletion(character: List<Character>?, messageHistory: List<ChatMessage>): MessageContent? {
+    suspend fun getCompletion(character: Character?, messageHistory: List<ChatMessage>): MessageContent? {
         val prompt = constructPrompt(character, messageHistory)
         try {
             val response = gptService.callGptApi(prompt)
@@ -29,21 +30,20 @@ class GPTRepository(private val gptService: GPTService) {
     }
 
     private fun constructPrompt(
-        characterList: List<Character>?,
+        character: Character?,
         messageHistory: List<ChatMessage>
     ): CompletionRequest {
-        val character = characterList?.firstOrNull()
+        Log.i("GPT", character?.name.toString())
 
         val systemMessageContent = buildString {
             append("You are ")
             append(character?.name ?: "an unnamed character")
             append(", ")
             append(character?.description ?: "with no specific description")
-            append(". Your goal is to ")
-            append(character?.goal ?: "unknown")
-            append(". ")
-            append(character?.backgroundContext ?: "No background context provided.")
-            //append("You MUST use JSON for your API response.")
+            append(". Here is some background information that the user has provided: ")
+            append(character?.backgroundContext ?: "unknown")
+            append(". You must carry out a deep story with the user, playing only the role of your character")
+//            append("You MUST use JSON for your API response.")
         }
 
 
@@ -61,6 +61,7 @@ class GPTRepository(private val gptService: GPTService) {
 
 
         val combinedMessageData = listOf(systemMessage) + messageContent
+        Log.i("Test", combinedMessageData.toString())
         return CompletionRequest(
             messages = combinedMessageData,
         )

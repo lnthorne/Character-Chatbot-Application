@@ -1,6 +1,7 @@
 package com.example.character_chatbot_application
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,7 @@ class SaveFragment : Fragment() {
         characterViewModel.allCharacterLiveData.observe(
             requireActivity(),
             Observer { savedCharacter ->
+                Log.i("TEST", savedCharacter.toString())
                 arrayList.clear()
                 arrayList.addAll(savedCharacter)
                 arrayAdapter.notifyDataSetChanged()

@@ -11,6 +11,7 @@ import com.example.character_chatbot_application.data.models.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class StoryRepository(
@@ -62,8 +63,12 @@ class StoryRepository(
         }
     }
 
-    fun getCharacterByUserId(id: Int): LiveData<List<Character>> {
-        return characterDao.getCharactersByUserId(id).asLiveData()
+    fun getCharacterByUserId(id: Int): Flow<List<Character>> {
+        return characterDao.getCharactersByUserId(id)
+    }
+
+    fun getCharacterByCharacterId(characterId: Int): LiveData<Character> {
+        return characterDao.getCharacterByCharacterId(characterId).asLiveData()
     }
 
     fun deleteCharacterById(id: Int) {

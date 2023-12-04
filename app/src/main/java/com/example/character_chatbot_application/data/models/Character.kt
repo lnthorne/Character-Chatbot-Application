@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
     onDelete = ForeignKey.CASCADE)),
     indices = [Index(value = ["userId"])])
 data class Character(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     val id: Int,
     val userId: Int,
 

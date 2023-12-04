@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import com.example.character_chatbot_application.Util.Globals
 import com.example.character_chatbot_application.data.database.AppDatabase
 import com.example.character_chatbot_application.data.models.User
 import com.example.character_chatbot_application.repositorys.StoryRepository
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         val userid = sharedPreferences.getInt(USER_ID_KEY, -1) // move all user data to vm
         if (userid == -1) {
             val newUser = User(
-                id = 0,
+                id = Globals.USER_ID,
                 firstName = "",
                 lastName = "",
                 password = "",
@@ -107,15 +108,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val insertPromptClickListener = View.OnClickListener {
-        val editText : EditText = it as EditText
-        val description = it.text.toString()
+        val (description, name, bgContext) = promptOnboardingFragment.getInputData()
         val character = Character(
-            id = 0,
+            id = Globals.CHARACTER_ID,
             userId = viewModel.currentUserId.value!!,
-            name = "",
+            name = name,
             description = description,
             goal = "",
-            backgroundContext = ""
+            backgroundContext = bgContext
         )
         println("Inserting character $character")
         viewModel.addCharacter(character)
