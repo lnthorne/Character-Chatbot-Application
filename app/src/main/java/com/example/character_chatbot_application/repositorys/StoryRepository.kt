@@ -71,6 +71,10 @@ class StoryRepository(
         return characterDao.getCharacterByCharacterId(characterId).asLiveData()
     }
 
+    suspend fun updateCharacterNameAndDescription(id: Int, newName: String, newDescription: String) {
+        characterDao.updateCharacterNameAndDescription(id, newName, newDescription)
+    }
+
     fun deleteCharacterById(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             characterDao.deleteCharacterById(id)

@@ -20,7 +20,7 @@ import com.example.character_chatbot_application.repositorys.StoryRepository
 import kotlin.properties.Delegates
 
 class DisplayActivity : AppCompatActivity() {
-    private lateinit var name: TextView
+    private lateinit var nameTV: TextView
     private lateinit var description: TextView
     private lateinit var database: AppDatabase
     private lateinit var databaseDao: CharacterDao
@@ -36,8 +36,8 @@ class DisplayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_history)
-
-        name = findViewById(R.id.nameTV)
+        id = intent.getIntExtra("entryId", -1)
+        nameTV = findViewById(R.id.nameTV)
         description = findViewById(R.id.descriptionTV)
         val deleteBtn = findViewById<Button>(R.id.deleteButton)
         val saveBtn = findViewById<Button>(R.id.saveButton)
@@ -49,9 +49,10 @@ class DisplayActivity : AppCompatActivity() {
             ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
 
         characterViewModel.allCharacterLiveData.observe(this, Observer { savedCharacter ->
-            val entry = savedCharacter.find{it.id == id}
-            if (entry!=null){
-                name.text = entry.name
+            Log.i("Observer", "Observer triggered")
+            val entry = savedCharacter.find { it.id == id }
+            if (entry != null) {
+                nameTV.text = entry.name
                 description.text = entry.description
             }
         })
@@ -59,8 +60,8 @@ class DisplayActivity : AppCompatActivity() {
         nameEdit = EditText(this)
         descriptionEdit = EditText(this)
 
-        name.setOnClickListener {
-            toggleEditMode(name, nameEdit)
+        nameTV.setOnClickListener {
+            toggleEditMode(nameTV, nameEdit)
         }
 
         description.setOnClickListener {
@@ -76,17 +77,14 @@ class DisplayActivity : AppCompatActivity() {
         }
 
         saveBtn.setOnClickListener {
-            val newName = name.text.toString()
-            val newDescription = description.text.toString()
+            val newName = nameEdit.text.toString()
+            val newDescription = descriptionEdit.text.toString()
+            Log.d("SaveButton", "New Name: $newName, New Description: $newDescription")
+            nameTV.text = newName
+            description.text = newDescription
 
-            characterViewModel.allCharacterLiveData.observe(this, Observer { savedCharacter ->
-                val entry = savedCharacter.find { it.id == id }
-                entry?.let {
-                    it.name = newName
-                    it.description = newDescription
-                    characterViewModel.updateCharacter(it)
-                }
-            })
+            characterViewModel.updateCharacterNameAndDescription(id, newName, newDescription)
+            finish()
         }
     }
     private fun toggleEditMode(viewToEdit: TextView?, editTextView: EditText?) {

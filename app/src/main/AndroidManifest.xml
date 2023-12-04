@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ChatBoardActivity"/>
+        <activity android:name=".DisplayActivity"></activity>
     </application>
 
 </manifest>
