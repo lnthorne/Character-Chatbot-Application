@@ -29,7 +29,7 @@ class WelcomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         startChat = view.findViewById(R.id.sc_btn)
         startChat.setOnClickListener(){
-            val intent = Intent(requireActivity(), ChatActivity::class.java)
+            val intent = Intent(requireActivity(), ChatBoardActivity::class.java)
             startActivity(intent)
         }
     }

@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/sc_btn"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="200dp"
         android:layout_gravity="center"
         android:background="@color/light_blue"
         android:text="@string/start_chat"/>

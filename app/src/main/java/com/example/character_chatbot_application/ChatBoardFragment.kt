@@ -3,10 +3,11 @@ package com.example.character_chatbot_application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ class ChatBoardFragment: Fragment() {
     private lateinit var viewModel: ChatViewModel
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var messageInput: EditText
+    private lateinit var linearFeatures: LinearLayout
     private var userId: Int = 0
 
     override fun onCreateView(
@@ -54,12 +56,23 @@ class ChatBoardFragment: Fragment() {
 
     private fun setupUI(view: View) {
         messageInput = view.findViewById(R.id.edit_gchat_message)
+        linearFeatures = view.findViewById(R.id.linear_features)
         val sendMessageButton = view.findViewById<ImageView>(R.id.button_gchat_send)
         val messagesView = view.findViewById<RecyclerView>(R.id.recycler_gchat)
 
         messageAdapter = MessageAdapter()
         messagesView.adapter = messageAdapter
         messagesView.layoutManager = LinearLayoutManager(context)
+
+        messageInput.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+            // If the EditText has focus, hide the LinearLayout
+            if (hasFocus) {
+                linearFeatures.visibility = View.GONE
+            } else {
+                // If the EditText loses focus, show the LinearLayout
+                linearFeatures.visibility = View.VISIBLE
+            }
+        }
 
         sendMessageButton.setOnClickListener {
             val messageText = messageInput.text.toString().trim()
